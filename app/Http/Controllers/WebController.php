@@ -25,6 +25,30 @@ class WebController extends Controller
         return view('login');
     }
 
+    public function login_submit(Request $resquest)
+    {
+        $credentials = [
+            'email' => $resquest->email,
+            'password' => $resquest->password,
+            'status' => 'Active'
+        ];
+
+        if(Auth::attempt($credentials)) {
+            return redirect()->route('dashboard');
+        }
+        else {
+            return redirect()->route('login');
+        }
+
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+
+        return redirect()->route('login');
+    }
+
     public function registration()
     {
         return view('registration');
@@ -56,8 +80,19 @@ class WebController extends Controller
         echo 'Email is sent successfully.';
     }
 
-    public function resgistration_verify()
+    public function resgistration_verify($token, $email)
     {
-        
+        $user = User::where('token', $token)->where('email', $email)->first();
+
+        if(!$user)
+        {
+            return redirect()->route('login');
+        }
+
+        $user->status = 'Active';
+        $user->token = '';
+        $user->update();
+
+        echo 'Registration successful.';
     }
 }
