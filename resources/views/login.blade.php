@@ -3,6 +3,7 @@
 <h1>Login</h1>
 
 <form action=""></form>
+    @csrf
     <div>
         Email Adress
     </div>

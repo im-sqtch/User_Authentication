@@ -21,5 +21,8 @@ Route::get('dashboard', [WebController::class, 'dashboard'])->name('dashboard');
 Route::get('login', [WebController::class, 'login'])->name('login');
 
 Route::get('registration', [WebController::class, 'registration'])->name('registration');
+Route::post('submition', [WebController::class, 'submition'])->name('submition');
+
+Route::get('/registration/verify/{token}/{email}', [WebController::class, 'resgistration_verify']);
 
 Route::get('forget-password', [WebController::class, 'forget_password'])->name('forget_password');

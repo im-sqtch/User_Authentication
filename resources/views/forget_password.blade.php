@@ -3,6 +3,7 @@
 <h1>Forget password</h1>
 
 <form action=""></form>
+    @csrf
     <div>
         Email Adress
     </div>

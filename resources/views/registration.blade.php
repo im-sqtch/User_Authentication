@@ -2,7 +2,8 @@
 
 <h1>Register</h1>
 
-<form action="">
+<form action="{{ route('submition') }}" method="post">
+    @csrf
     <div>
         Name
     </div>
@@ -13,7 +14,7 @@
         Email Adress
     </div>
     <div>
-        <input type="email">
+        <input type="email" name="email">
     </div>
     <div>
         Password
