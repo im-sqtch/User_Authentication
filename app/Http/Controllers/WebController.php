@@ -78,14 +78,6 @@ class WebController extends Controller
         \Mail::to($request->email)->send(new Webmail($subject, $message));
 
         echo 'Check your email';
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->status = 'Pending';
-        $user->token = $token;
-        $user->save();
     }
 
     public function submition(Request $request)
@@ -123,5 +115,26 @@ class WebController extends Controller
         $user->update();
 
         echo 'Registration successful.';
+    }
+
+    public function reset_password($token, $email)
+    {
+        $user = User::where('token', $token)->where('email', $email)->first();
+        if(!$user) {
+            return redirect()->route('login');
+        }
+
+        return view('reser_password', compact('token', 'email'));
+    }
+
+    public function reset_password_submit(Request $request)
+    {
+        $user = User::where('token', $request->token)->where('email', $request->email)->first();
+
+        $user->token = '';
+        $user->password = Hash::make($request->new_password);
+        $user->update();
+
+        echo 'Password reset successfully.';
     }
 }

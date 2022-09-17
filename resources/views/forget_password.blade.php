@@ -2,7 +2,7 @@
 
 <h1>Forget password</h1>
 
-<form action="{{ route('forget_password_submit') }}"></form>
+<form action="{{ route('forget_password_submit') }}" method="post"></form>
     @csrf
     <div>
         Email Adress
