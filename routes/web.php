@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WebController::class, 'index'])->name('home');
 
 Route::get('/dashboard', [WebController::class, 'dashboard'])->name('dashboard')->middleware('auth');
+Route::get('/settings', [WebController::class, 'settings'])->name('settings')->middleware('auth');
+
 
 Route::get('/login', [WebController::class, 'login'])->name('login');
 Route::post('/login-submit', [WebController::class, 'login_submit'])->name('login_submit');

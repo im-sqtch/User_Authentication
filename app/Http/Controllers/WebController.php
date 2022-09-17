@@ -20,6 +20,11 @@ class WebController extends Controller
         return view('dashboard');
     }
 
+    public function settings()
+    {
+        return view('settings');
+    }
+
     public function login()
     {
         return view('login');
@@ -90,6 +95,7 @@ class WebController extends Controller
         $user->password = Hash::make($request->password);
         $user->status = 'Pending';
         $user->token = $token;
+        $user->role = 2;
         $user->save();
 
         $verification_link = url('registration/verify/'.$token.'/'.$request->email);

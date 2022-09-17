@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('status');
+            $table->integer('role');
             $table->string('token');
             $table->timestamps();
         });
