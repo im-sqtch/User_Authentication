@@ -59,6 +59,35 @@ class WebController extends Controller
         return view('forget_password');
     }
 
+    public function forget_password_submit(Request $request)
+    {
+        $token = hash('sha256',time());
+
+        $user = User::where('email', $request->email)->first();
+        if(!$user) {
+            dd('Email not found');
+        }
+
+        $user->token = $token;
+        $user->update();
+
+        $reset_link = url('reset-password/'.$token.'/'.$request->email);
+        $subject = 'Reset Password';
+        $message = 'Please click on the following link: <br><a href="'.$reset_link.'">Click here</a>';
+
+        \Mail::to($request->email)->send(new Webmail($subject, $message));
+
+        echo 'Check your email';
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->status = 'Pending';
+        $user->token = $token;
+        $user->save();
+    }
+
     public function submition(Request $request)
     {
         $token = hash('sha256',time());
